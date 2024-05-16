@@ -1,0 +1,150 @@
+
+
+<!DOCTYPE html>
+<html>
+
+<head>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous" />
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous"></script>
+    <style> 
+    /*Css code*/
+    
+    
+    @import url("https://fonts.googleapis.com/css2?      family=Bree+Serif&family=Caveat:wght@400;700&family=Lobster&family=Monoton&family=Open+Sans:ital,wght@0,400;0,700;1,400;1,700&family=Playfair+Display+SC:ital,wght@0,400;0,700;1,700&family=Playfair+Display:ital,wght@0,400;0,700;1,700&family=Roboto:ital,wght@0,400;0,700;1,400;1,700&family=Source+Sans+Pro:ital,wght@0,400;0,700;1,700&family=Work+Sans:ital,wght@0,400;0,700;1,700&display=swap");
+
+.speed-typing-container {
+    background-image: linear-gradient(to left, #dac0ff, #f3eaff, #f2ebfe);
+}
+
+.img {
+    height: 50px;
+    width: 50px;
+}
+
+.seconds {
+    font-size: 50px;
+}
+
+.textarea-box {
+    border-style: solid;
+    border-radius: 20px;
+    border-color: #9aa5b1;
+}
+    </style>
+    
+</head>
+
+<body>
+    <div class="speed-typing-container m-3 p-3" id="speedTypingTest">
+        <h1>Speed Typing Test</h1>
+        <p>On Your fingers lets set Go!</p>
+        <div class="d-flex flex-row">
+            <img src="https://assets.ccbp.in/frontend/dynamic-webapps/clock-img.png" class="img pt-2 mt-4" />
+            <p class="pl-4 seconds" id="timer">1seconds</p>
+        </div>
+        <div class="d-none mt-5 mb-5" id="spinner">
+            <div class="d-flex flex-row justify-content-center">
+                <div class="spinner-border" role="status"></div>
+            </div>
+        </div>
+        <div class="textarea-box m-3 p-3 text-center">
+            <p id="quoteDisplay">random quote will be generated</p>
+            <textarea class="p-5" rows="8" columns="80" placeholder="type here!!" id="quoteInput"></textarea>
+        </div>
+        <div class="text-center">
+            <p id="result"></p>
+            <h3 id="score"></h3>
+            <button class="btn btn-primary" id="submitBtn">Submit</button>
+            <button class="btn btn-secondary" id="resetBtn">Reset</button>
+        </div>
+    </div>
+    
+    
+<script>
+
+//Javascript Code
+
+let timerEl = document.getElementById("timer");
+let submitBtnEl = document.getElementById("submitBtn");
+let resetBtnEl = document.getElementById("resetBtn");
+let quoteDisplayEl = document.getElementById("quoteDisplay");
+let resultEl = document.getElementById("result");
+let quoteInputEl = document.getElementById("quoteInput");
+let spinnerEl = document.getElementById("spinner");
+let scoreEl = document.getElementById("score");
+
+
+let intervalId; // Variable to hold interval ID
+let counter = 0;
+
+let counterTimer = function() {
+    counter = counter + 1;
+    timerEl.textContent = counter + " seconds";
+}
+
+function startIntervalId() {
+    intervalId = setInterval(counterTimer, 1000);
+}
+
+
+const mockParagraphs = [
+    "The warm summer breeze whispered through the towering oak trees, gently rustling their leaves. In the distance, the faint sound of children's laughter could be heard, echoing across the tranquil neighborhood. It was a scene of pure serenity, where time seemed to slow down and the worries of the day melted away.",
+    "As the sun dipped below the horizon, the sky burst into a kaleidoscope of colors – vibrant oranges, deep purples, and fiery reds. The world seemed to hold its breath, captivated by the breathtaking display. In that moment, it was as if the entire universe had conspired to create a masterpiece, a fleeting moment of pure beauty that left a lasting impression on the soul.",
+    "The old, weathered cabin stood proudly in the heart of the forest, its wooden walls adorned with the scars of time. Inside, the crackling fire and the comforting scent of pine filled the air, creating a cozy and inviting atmosphere. It was a place of refuge, a sanctuary where one could escape the hustle and bustle of the outside world and find solace in the tranquility of nature.",
+    "The waves crashed against the rocky shore, their relentless rhythm a soothing lullaby to the soul. The salty air filled the lungs, invigorating and cleansing, as the sun's golden rays danced across the glistening surface of the ocean. It was a scene of timeless beauty, a reminder that even in the face of the ever-changing tides of life, there is a sense of peace and enduring wonder to be found in the natural world.",
+    "The city streets were alive with the vibrant energy of a thousand stories, each passerby a unique chapter in the grand narrative of urban life. The air was filled with the sounds of laughter, the chatter of conversation, and the hum of traffic, creating a symphony that captured the essence of the human experience. It was a place where dreams were born, where opportunities were seized, and where the pulse of the world could be felt with every step.",
+    "The gentle breeze rustled the leaves of the ancient oak tree, casting dancing shadows on the weathered wooden bench. A lone sparrow perched on a nearby branch, its melodious song filling the air with a sense of peace and tranquility. In the distance, the faint sound of laughter echoed, a reminder of the simple joys that can be found in the world around us.",
+    "The towering mountains stood tall and proud, their snow-capped peaks reaching towards the heavens. The winding path that snaked through the valley below was dotted with wildflowers, their vibrant colors a testament to the raw, untamed beauty of nature. It was a landscape that inspired awe and wonder, a place where the boundaries between the physical and the spiritual seemed to blur.",
+    "The bustling city streets were a symphony of sound and movement, with each person a unique instrument in the grand orchestration of urban life. The air was thick with the scent of street food and the hum of traffic, punctuated by the occasional honk of a car horn or the laughter of passersby. It was a world in constant motion, a place where every moment held the promise of something new and unexpected.",
+    "The verdant meadow stretched out before him, a tapestry of emerald greens and vibrant wildflowers. The gentle breeze carried the sweet fragrance of the blooms, filling his senses with a sense of calm and serenity. In the distance, a lone tree stood, its branches reaching towards the azure sky like outstretched arms, offering a sanctuary from the hustle and bustle of the world beyond.",
+    "The gentle lapping of the waves against the weathered wooden dock created a soothing rhythm that seemed to slow the passage of time. The sun, low on the horizon, cast a warm glow over the tranquil waters, reflecting a shimmering dance of light and shadow. It was a moment of pure, unadulterated peace, a respite from the demands of the day and a chance to simply be, to let the worries of the world fade away.",
+    "The moonlight cast a soft glow over the serene lake, its surface rippling with the occasional brush of a gentle breeze. The sound of crickets and the distant hoot of an owl created a natural symphony, lulling the senses into a state of utter tranquility. It was a moment of perfect stillness, where the hustle and bustle of the world seemed to fade away, leaving only the beauty of the natural world.",
+    "The bustling market square was a kaleidoscope of sights, sounds, and scents, each vendor and shopper adding their own unique thread to the vibrant tapestry of urban life. The air was filled with the aroma of freshly baked bread, the sizzle of grilled meats, and the chatter of lively conversation. It was a place where cultures collided and traditions were shared, a melting pot of humanity that pulsed with the rhythm of the city.",
+    "The ancient stone walls of the castle stood tall and proud, their weathered surfaces a testament to the passage of time. The inner courtyard was a serene oasis, where the gentle trickle of a fountain and the soft rustling of leaves created a soothing backdrop to the echoes of history that lingered in the air. It was a place that seemed to exist outside the confines of the modern world, a portal to a bygone era where the grandeur of the past still reigned supreme.",
+    "The sun-dappled path wound its way through the dense forest, the canopy of leaves above filtering the light into a soft, ethereal glow. The air was filled with the sweet scent of wildflowers and the gentle chirping of birds, creating a symphony of nature that soothed the soul. It was a place of refuge, a sanctuary where the stresses of the outside world melted away, leaving only the tranquility of the natural world.",
+    "The bustling city skyline was a tapestry of glass and steel, a testament to the ingenuity and ambition of humankind. Yet, amid the towering skyscrapers and the constant hum of traffic, there were pockets of serenity – hidden gardens, quiet courtyards, and peaceful oases where the soul could find respite from the relentless pace of urban life. It was a place of contrasts, where the modern and the ancient coexisted in a delicate balance, each enhancing the beauty of the other.",
+];
+
+function getRandomQuote() {
+    const randomIndex = Math.floor(Math.random() * mockParagraphs.length);
+    quoteDisplayEl.textContent = mockParagraphs[randomIndex];
+}
+
+// Call getRandomQuote() when the page loads
+getRandomQuote();
+startIntervalId();
+
+resetBtnEl.addEventListener("click", function(event) {
+    clearInterval(intervalId); // Clear the interval
+    getRandomQuote(); // Call getRandomQuote() to display a new quote
+    counter = 0;
+    startIntervalId();
+    resultEl.textContent = "";
+    quoteInputEl.value = "";
+});
+
+submitBtnEl.addEventListener("click", function(event) {
+    clearInterval(intervalId); // Clear the interval
+    if (quoteInputEl.value === quoteDisplayEl.textContent) { // Compare input value with displayed quote
+        resultEl.textContent = `You typed in ${counter} secs`;
+    } else {
+        resultEl.textContent = "Entered matter has spelling mistakes";
+    }
+    counter = 0;
+});
+
+</script>
+    
+</body>
+
+</html>
+
+
+
+
+
+
+
+
