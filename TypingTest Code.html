@@ -56,6 +56,7 @@
         <div class="text-center">
             <p id="result"></p>
             <h3 id="score"></h3>
+            <button class="btn btn-primary" id="startBtn">Start</button>
             <button class="btn btn-primary" id="submitBtn">Submit</button>
             <button class="btn btn-secondary" id="resetBtn">Reset</button>
         </div>
@@ -113,8 +114,11 @@ function getRandomQuote() {
 }
 
 // Call getRandomQuote() when the page loads
-getRandomQuote();
-startIntervalId();
+let startBtnEl = getElementById("startBtn").addEventListener("click",function(){
+    getRandomQuote();
+    startIntervalId();
+})
+
 
 resetBtnEl.addEventListener("click", function(event) {
     clearInterval(intervalId); // Clear the interval
