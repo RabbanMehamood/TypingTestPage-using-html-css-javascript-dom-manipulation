@@ -15,9 +15,28 @@
     @import url("https://fonts.googleapis.com/css2?      family=Bree+Serif&family=Caveat:wght@400;700&family=Lobster&family=Monoton&family=Open+Sans:ital,wght@0,400;0,700;1,400;1,700&family=Playfair+Display+SC:ital,wght@0,400;0,700;1,700&family=Playfair+Display:ital,wght@0,400;0,700;1,700&family=Roboto:ital,wght@0,400;0,700;1,400;1,700&family=Source+Sans+Pro:ital,wght@0,400;0,700;1,700&family=Work+Sans:ital,wght@0,400;0,700;1,700&display=swap");
 
 .speed-typing-container {
-    background-image: linear-gradient(to left, #dac0ff, #f3eaff, #f2ebfe);
+    background-image: linear-gradient(to left, #d3c0ff, #f3eaff, #f2ebfe);
+    height: 100vh;
+    border-radius: 30px;
 }
 
+.easy-background{
+    background-image: linear-gradient(to left, #c0ffd1, #8ed165, #44bf40);
+    height: 100vh;
+    border-radius: 30px;
+}
+
+.Medium-background{
+    background-image: linear-gradient(to left, #f9dea6, #ff8f44, #e87d36);
+    height: 100vh;
+    border-radius: 30px;
+}
+
+.Hard-background{
+    background-image: linear-gradient(to left, #ff6363, #ef4242, #c12222);
+    height: 100vh;
+    border-radius: 30px;
+}
 .img {
     height: 50px;
     width: 50px;
@@ -37,27 +56,32 @@
 </head>
 
 <body>
-    <div class="speed-typing-container m-3 p-3" id="speedTypingTest">
-        <h1>Speed Typing Test</h1>
+    <div class="speed-typing-container  p-3" id="speedTypingTest">
+        <h1>Quick Keys</h1>
         <p>On Your fingers lets set Go!</p>
         <div class="d-flex flex-row">
             <img src="https://assets.ccbp.in/frontend/dynamic-webapps/clock-img.png" class="img pt-2 mt-4" />
             <p class="pl-4 seconds" id="timer">1seconds</p>
+             <div style="margin-left: 400px;">
+            <button class="btn btn-success pl-4 pr-4"  style ="margin: 20px; font-size: 23px;" id="EasyBtn">Easy</button>
+            <button class="btn btn-warning pl-4 pr-4"  style ="margin: 20px; font-size: 23px;" id="MediumBtn">Medium</button>
+             <button class="btn btn-danger pl-4 pr-4"style ="margin: 20px; font-size: 23px;" id="HardBtn">Hard</button>
+             </div>
         </div>
         <div class="d-none mt-5 mb-5" id="spinner">
             <div class="d-flex flex-row justify-content-center">
                 <div class="spinner-border" role="status"></div>
             </div>
         </div>
-        <div class="textarea-box m-3 p-3 text-center">
-            <p id="quoteDisplay">random quote will be generated</p>
+        <div class="textarea-box  p-3 text-center" style="margin-top:100px;">
+            <p id="quoteDisplay" style="padding: 40px; border-radius: 20px; margin:10px; background-color: azure;">random quote will be generated</p>
             <textarea class="p-5" rows="8" columns="80" placeholder="type here!!" id="quoteInput"></textarea>
         </div>
         <div class="text-center">
             <p id="result"></p>
             <h3 id="score"></h3>
             <button class="btn btn-primary" id="startBtn">Start</button>
-            <button class="btn btn-primary" id="submitBtn">Submit</button>
+            <button class="btn btn-success" id="submitBtn">Submit</button>
             <button class="btn btn-secondary" id="resetBtn">Reset</button>
         </div>
     </div>
@@ -75,6 +99,35 @@ let resultEl = document.getElementById("result");
 let quoteInputEl = document.getElementById("quoteInput");
 let spinnerEl = document.getElementById("spinner");
 let scoreEl = document.getElementById("score");
+let startBtnEl = document.getElementById("startBtn")
+let EasyBtnEl = document.getElementById("EasyBtn");
+let MediumBtnEl = document.getElementById("MediumBtn");
+let HardBtnEl = document.getElementById("HardBtn");
+
+let TypingTestBg = document.getElementById("speedTypingTest");
+
+
+
+EasyBtnEl.addEventListener("click", function(event) {
+    TypingTestBg.classList.add("easy-background");
+    TypingTestBg.classList.remove("Medium-background");
+    TypingTestBg.classList.remove("Hard-background");
+    getRandomQuote();
+});
+MediumBtnEl.addEventListener("click", function(event) {
+    TypingTestBg.classList.add("Medium-background");
+    TypingTestBg.classList.remove("easy-background");
+    TypingTestBg.classList.remove("Hard-background");
+    getRandomQuote();
+});
+HardBtnEl.addEventListener("click", function(event) {
+    TypingTestBg.classList.add("Hard-background");
+    TypingTestBg.classList.remove("easy-background");
+    TypingTestBg.classList.remove("Medium-background");
+    getRandomQuote();
+});
+
+
 
 
 let intervalId; // Variable to hold interval ID
@@ -114,8 +167,7 @@ function getRandomQuote() {
 }
 
 // Call getRandomQuote() when the page loads
-let startBtnEl = getElementById("startBtn").addEventListener("click",function(){
-    getRandomQuote();
+startBtnEl.addEventListener("click",function(event){
     startIntervalId();
 })
 
@@ -124,7 +176,7 @@ resetBtnEl.addEventListener("click", function(event) {
     clearInterval(intervalId); // Clear the interval
     getRandomQuote(); // Call getRandomQuote() to display a new quote
     counter = 0;
-    startIntervalId();
+    timer.textContent = "0" + "seconds";
     resultEl.textContent = "";
     quoteInputEl.value = "";
 });
@@ -133,7 +185,7 @@ submitBtnEl.addEventListener("click", function(event) {
     clearInterval(intervalId); // Clear the interval
     if (quoteInputEl.value === quoteDisplayEl.textContent) { // Compare input value with displayed quote
         resultEl.textContent = `You typed in ${counter} secs`;
-    } else {
+    } else{
         resultEl.textContent = "Entered matter has spelling mistakes";
     }
     counter = 0;
